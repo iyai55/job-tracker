@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Job Tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <h1>Job Tracker</h1>
+
+    <form id="inputForm">
+        <div class="divForm">
+            Company Name: <input id="companyName" type="text" placeholder="Company name"><br />
+            Job Title: <input id="jobTitle" type="text" placeholder="Job title"><br />
+            Applied Date: <input id="selectDate" type="date" data-placeholder="Select a date"><br />
+            Status <select id="statusID">
+                <option class="apply">Applied</option>
+                <option class="interview">Interview</option>
+                <option class="reject">Rejected</option>
+                <option class="offer">Offer</option>
+            </select> <br /><br />
+            <button type="submit">Add Job</button>
+        </div>
+    </form>
+
+    <h2>My Applications</h2>
+
+    <div id="displayJobApplications"></div>
+    <script src="script.js"></script>
+   
+</body>
+
+<div id="editPopup" class="popup hidden">
+  <div class="popup-content">
+    <h2>Edit Job</h2>
+
+    Compay Name: <input id="editCompanyName" type="text"><br />
+    JobTitle: <input id="editJobTitle" type="text"><br />
+    Applied Date: <br /><input id="editAppliedDate" type="date"><br />
+
+    Status: <br /><select id="editStatus">
+      <option value="Applied">Applied</option>
+      <option value="Interview">Interview</option>
+      <option value="Offer">Offer</option>
+      <option value="Rejected">Rejected</option>
+    </select><br /><br />
+
+    <button id="saveEditBtn" onclick="savebtn()">Save</button>
+    <button id="closeEditBtn" onclick="hide()">Cancel</button>
+  </div>
+</div>
+
+</html>
