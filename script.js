@@ -70,7 +70,6 @@ function createJobCard(job){
     delete_button.textContent = "Delete";
     div.appendChild(delete_button)
     delete_button.addEventListener('click', ()=>{
-        alert("Job has been deleted successfully!")
         deletebtn(job.id)
     });
 
@@ -97,6 +96,10 @@ document.getElementById("inputForm").addEventListener("submit", addJobButton);
 loadJobs();
 
 function deletebtn(id){
+    if(!confirm("Are you sure you want to delete this item?")){
+            alert("Deletion cancelled")            
+            return;
+    }
     fetch('http://127.0.0.1:5000/jobs/'+id, {
     method: 'DELETE'
 })
@@ -120,11 +123,10 @@ function openEditPopup(job){
 
     editPopup.classList.remove("hidden");
 
-    console.log("company name", job.company_name)
 }
 
 function hide(){
-    document.getElementById("editPopup").classList.add("hidden");
+    document.getElementById("editPopup").style.display = "none";
    
 }
 

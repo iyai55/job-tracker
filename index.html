@@ -28,27 +28,33 @@
 
     <div id="displayJobApplications"></div>
     <script src="script.js"></script>
-   
+
 </body>
 
 <div id="editPopup" class="popup hidden">
   <div class="popup-content">
-    <h2>Edit Job</h2>
+        
+    <div class = "popup-close"></div>
+        <h2>Edit Job</h2>
 
-    Compay Name: <input id="editCompanyName" type="text"><br />
-    JobTitle: <input id="editJobTitle" type="text"><br />
-    Applied Date: <br /><input id="editAppliedDate" type="date"><br />
+        Compay Name: <input id="editCompanyName" type="text"><br />
+        JobTitle: <br /><input id="editJobTitle" type="text"><br />
+        Applied Date: <br /><input id="editAppliedDate" type="date"><br />
 
-    Status: <br /><select id="editStatus">
-      <option value="Applied">Applied</option>
-      <option value="Interview">Interview</option>
-      <option value="Offer">Offer</option>
-      <option value="Rejected">Rejected</option>
-    </select><br /><br />
+        Status: <br /><select id="editStatus">
+        <option value="Applied">Applied</option>
+        <option value="Interview">Interview</option>
+        <option value="Offer">Offer</option>
+        <option value="Rejected">Rejected</option>
+        </select><br /><br />
 
-    <button id="saveEditBtn" onclick="savebtn()">Save</button>
-    <button id="closeEditBtn" onclick="hide()">Cancel</button>
-  </div>
+        <button id="saveEditBtn" onclick="savebtn()">Save</button>
+        <button id="closeEditBtn" onclick="hide()">Cancel</button>
+        
+    </div>
+</div>
+
+ 
 </div>
 
 </html>
