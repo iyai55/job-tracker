@@ -70,7 +70,6 @@ function createJobCard(job){
     delete_button.textContent = "Delete";
     div.appendChild(delete_button)
     delete_button.addEventListener('click', ()=>{
-        alert("Job has been deleted successfully!")
         deletebtn(job.id)
     });
 
@@ -98,6 +97,9 @@ document.getElementById("inputForm").addEventListener("submit", addJobButton);
 loadJobs();
 
 function deletebtn(id){
+    if (!confirm("Are you sure you want to delete this job?")) {
+    return;
+    }
     fetch('http://127.0.0.1:5000/jobs/'+id, {
     method: 'DELETE'
 })
