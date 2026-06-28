@@ -31,24 +31,48 @@ function  addJobButton(event) {
         console.log("after loadJobs");
     })
 }
+
+document.getElementById("searchByStatus").addEventListener("change", loadJobs);
+
 function loadJobs(){
     const displayJobApplications = document.getElementById("displayJobApplications");
     
     fetch("http://127.0.0.1:5000/jobs")
     .then(response => response.json())
     .then(data => {
-        console.log(data);
+        const filteredJobs = filterByStatus(data)
+        console.log("filteredJobs", filteredJobs);
         displayJobApplications.innerHTML = "";
 
-        data.forEach(job => {
+        filteredJobs.forEach(job => {
             console.log("creating", job);
-            const card = createJobCard(job);
-            console.log("card" + card)
-            displayJobApplications.appendChild(card);
+
+                const card = createJobCard(job);
+                displayJobApplications.appendChild(card);
+               
             
         });
         console.log("finished loading jobs");
     })
+}
+function filterByStatus(jobs){
+    console.log("into filterByStatus");
+    console.log("job" ,jobs);
+
+    const filterValue = document.getElementById("searchByStatus").value;
+    console.log("filterValue" + filterValue);
+
+    const filteredJobs = jobs.filter(job =>{
+
+        if (filterValue === "all"){
+        return jobs
+        }
+        return filterValue === job.status
+       
+    })
+    console.log("filteredJobs" ,filteredJobs);
+    return filteredJobs;
+    
 }
 function createJobCard(job){
     const fields = [
@@ -163,3 +187,6 @@ function savebtn(){
         console.log("After updated");
     })
 }
+
+
+

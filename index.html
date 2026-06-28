@@ -25,11 +25,21 @@
     </form>
 
     <h2>My Applications</h2>
+     <div> 
+        Search by Status <select id="searchByStatus">
+            <option value="all" id = "all">All</option>
+            <option value="Applied" id = "Applied">Applied</option>
+            <option value="Interview" id = "Interview">Interview</option>
+            <option value="Rejected" id = "Reject">Rejected</option>
+             <option value="Offer" id = "Offer">Offer</option>
+    </select> </div>
 
     <div id="displayJobApplications"></div>
+    
     <script src="script.js"></script>
 
 </body>
+
 
 <div id="editPopup" class="popup hidden">
   <div class="popup-content">
