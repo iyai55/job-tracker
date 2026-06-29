@@ -33,6 +33,8 @@ function  addJobButton(event) {
 }
 
 document.getElementById("searchByStatus").addEventListener("change", loadJobs);
+document.getElementById("searchInput").addEventListener("input", loadJobs);
+
 
 function loadJobs(){
     const displayJobApplications = document.getElementById("displayJobApplications");
@@ -40,19 +42,28 @@ function loadJobs(){
     fetch("http://127.0.0.1:5000/jobs")
     .then(response => response.json())
     .then(data => {
-        const filteredJobs = filterByStatus(data)
-        console.log("filteredJobs", filteredJobs);
+        const filteredJobs = filterByStatus(data);
+        const filteredSearchJobs = searchInput(filteredJobs);
+
+        console.log("filteredSearchJobs", filteredSearchJobs);
         displayJobApplications.innerHTML = "";
 
-        filteredJobs.forEach(job => {
-            console.log("creating", job);
+        // filteredJobs.forEach(job => {
+        //     console.log("search ny status dropdown", job);
 
-                const card = createJobCard(job);
-                displayJobApplications.appendChild(card);
+        //         const card = createJobCard(job);
+        //         displayJobApplications.appendChild(card);
                
             
-        });
-        console.log("finished loading jobs");
+        // });
+        // console.log("finished loading jobs");
+
+        filteredSearchJobs.forEach(job =>{
+            console.log("search bar by title", job);
+            const card = createJobCard(job);
+            displayJobApplications.appendChild(card)
+        })
+
     })
 }
 function filterByStatus(jobs){
@@ -74,6 +85,29 @@ function filterByStatus(jobs){
     return filteredJobs;
     
 }
+
+function searchInput(jobs){
+
+    console.log("searchInput: ",jobs)
+    const searchValue = document.getElementById("searchInput")
+    .value
+    .toLowerCase()
+    .trim();
+
+    console.log("searchValue==>", searchValue);
+    
+    const filteredSearchJobs = jobs.filter(job =>{
+        if(searchInput ===""){
+            return jobs;
+        }     
+
+    return job.job_title.toLowerCase().includes(searchValue);
+       
+    });   
+    return filteredSearchJobs;
+
+}
+
 function createJobCard(job){
     const fields = [
     ["Company Name", job.company_name],
