@@ -7,42 +7,98 @@
 </head>
 
 <body>
-    <h1>Job Tracker</h1>
+     <div class="container">
+        <section class="form-section">
+            <h1>Job Tracker</h1>
 
-    <form id="inputForm">
-        <div class="divForm">
-            Company Name: <input id="companyName" type="text" placeholder="Company name"><br />
-            Job Title: <input id="jobTitle" type="text" placeholder="Job title"><br />
-            Applied Date: <input id="selectDate" type="date" data-placeholder="Select a date"><br />
-            Status <select id="statusID">
-                <option class="apply">Applied</option>
-                <option class="interview">Interview</option>
-                <option class="reject">Rejected</option>
-                <option class="offer">Offer</option>
-            </select> <br /><br />
-            <button type="submit">Add Job</button>
-        </div>
-    </form>
+            <form id="inputForm">
+                <div class="divForm">
+                    <div class="form-group">
+                        <label for="companyName">Company Name</label>
+                        <input id="companyName">
+                    </div>
+                    <div class="form-group">
+                        <label for="Job title">Job Title</label>
+                        <input id="jobTitle">
+                    </div>
+                    <div class="form-group">
+                        <label for="selectDate">Applied Date</label>
+                        <input type="date" id="appliedDate" name="appliedDate">
+                    </div>
+                    <div class="form-group">
+                        Status <select id="statusID">
+                            <option class="apply">Applied</option>
+                            <option class="interview">Interview</option>
+                            <option class="reject">Rejected</option>
+                            <option class="offer">Offer</option>
+                        </select> 
+                    </div>
+                    <button type="submit">Add Job</button>
+                </div>
+            </form>
+        </section>
+        <section class = "application-section">
+            <h2>My Applications</h2>
+            <div class = "searchArea">
+                <div class = "search"> Search by Status
+                    <select id="searchByStatus" class = "statusSearch">
+                        <option value="all" id = "all">All</option>
+                        <option value="Applied" id = "Applied">Applied</option>
+                        <option value="Interview" id = "Interview">Interview</option>
+                        <option value="Rejected" id = "Reject">Rejected</option>
+                        <option value="Offer" id = "Offer">Offer</option>
+                    </select>
+                </div>
+                <div class = "search">Search by Job Title:
+                    <input type="search" id ="searchInput" name="searchByTitle" placeholder="Job Title">
+                </div>
+                <div class = "search">Sort By
+                    <select id="sortBy">
+                        <option value="company-asc" id = "company-asc">Company A-Z</option>
+                        <option value="company-desc" id = "company-desc">Company Z-A</option>
+                        <option value="date-newest" id = "newest">Newest</option>
+                        <option value="date-oldest" id = "oldest">Oldest</option>
+                    </select>
+                </div>
+            </div>   
 
-    <h2>My Applications</h2>
-     <div> 
-        Search by Status <select id="searchByStatus">
-            <option value="all" id = "all">All</option>
-            <option value="Applied" id = "Applied">Applied</option>
-            <option value="Interview" id = "Interview">Interview</option>
-            <option value="Rejected" id = "Reject">Rejected</option>
-             <option value="Offer" id = "Offer">Offer</option>
-    </select> <br />
-    </div>
-    <div>
-        Search by Job Title: <input type="search" id ="searchInput" name="searchByTitle" placeholder="Job Title">
-        <button type="submit">Search</i></button>
-    </div>
+                
+            <div class="dashboard">
+                <div class="stat-card">
+                    <h3>Total</h3>
+                    <p id="totalJobs">0</p>
+                </div>
 
-    <div id="displayJobApplications"></div>
+                <div class="stat-card">
+                    <h3>Applied</h3>
+                    <p id="appliedJobs">0</p>
+                </div>
+
+                <div class="stat-card">
+                    <h3>Interview</h3>
+                    <p id="interviewedJobs">0</p>
+                </div>
+
+                <div class="stat-card">
+                    <h3>Offer</h3>
+                    <p id="offerJobs">0</p>
+                </div>
+
+                <div class="stat-card">
+                    <h3>Rejected</h3>
+                    <p id="rejectedJobs">0</p>
+                </div>
+            </div>
+
+            
+
+            <div id="displayJobApplications"></div>
+            <script src="script.js"></script>
+            
+            
+        </section>
+        
     
-    <script src="script.js"></script>
-
 </body>
 
 

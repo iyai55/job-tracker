@@ -3,7 +3,7 @@ function  addJobButton(event) {
     event.preventDefault();
     const compName = document.getElementById('companyName').value;
     const JobTi = document.getElementById('jobTitle').value;
-    const date = document.getElementById('selectDate').value;
+    const date = document.getElementById('appliedDate').value;
     const status = document.getElementById('statusID').value; 
 
 
@@ -34,37 +34,82 @@ function  addJobButton(event) {
 
 document.getElementById("searchByStatus").addEventListener("change", loadJobs);
 document.getElementById("searchInput").addEventListener("input", loadJobs);
+document.getElementById("sortBy").addEventListener("change", loadJobs);
+document.getElementById("inputForm").addEventListener("submit", addJobButton);
+loadJobs();
 
 
 function loadJobs(){
+    const sortValue = document.getElementById("sortBy").value;
     const displayJobApplications = document.getElementById("displayJobApplications");
+    displayJobApplications.innerHTML = "";
     
     fetch("http://127.0.0.1:5000/jobs")
     .then(response => response.json())
     .then(data => {
-        const filteredJobs = filterByStatus(data);
-        const filteredSearchJobs = searchInput(filteredJobs);
+        console.log("data",data[0]);
+        let displayJobs = data;
+        updateDashboard(displayJobs)
 
-        console.log("filteredSearchJobs", filteredSearchJobs);
-        displayJobApplications.innerHTML = "";
+        displayJobs = filterByStatus(displayJobs);
+        displayJobs = searchInput(displayJobs);
+        displayJobs = sortJobs(displayJobs, sortValue);
 
-        // filteredJobs.forEach(job => {
-        //     console.log("search ny status dropdown", job);
+        if(displayJobs.length === 0){
+                displayJobApplications.innerHTML = "<p>No jobs found.</p>";
+                return;
+                
+            }
 
-        //         const card = createJobCard(job);
-        //         displayJobApplications.appendChild(card);
-               
-            
-        // });
-        // console.log("finished loading jobs");
-
-        filteredSearchJobs.forEach(job =>{
+        displayJobs.forEach(job =>{
             console.log("search bar by title", job);
             const card = createJobCard(job);
             displayJobApplications.appendChild(card)
         })
 
     })
+}
+
+
+function sortJobs(jobs, sortValue){
+let sortedJobs = [...jobs];
+
+    console.log("sort value:", sortValue);
+
+    if(sortValue === "company-asc"){
+        sortedJobs.sort((a,b) => a.company_name.localeCompare(b.company_name))
+    }
+    if(sortValue === "company-desc"){
+        sortedJobs.sort((a,b) => b.company_name.localeCompare(a.company_name))
+    }
+    if(sortValue === "date-newest"){
+        sortedJobs.sort((a,b) => new Date(b.applied_date) - new Date(a.applied_date))
+    }
+    if(sortValue === "date-oldest"){
+        sortedJobs.sort((a,b) => new Date(a.applied_date) - new Date(b.applied_date))
+    }
+
+  return sortedJobs;
+}
+function updateDashboard(jobs){
+    const count = {}
+
+    jobs.forEach(job=> {
+        if(count[job.status]  === undefined){
+            count[job.status] = 0
+        }
+        count[job.status] += 1;
+        console.log("count",count["Applied"]);
+    })
+
+    document.getElementById("totalJobs").textContent = jobs.length;
+    document.getElementById("appliedJobs").textContent = count["Applied"];
+    document.getElementById("interviewedJobs").textContent = count["Interview"];
+    document.getElementById("offerJobs").textContent = count["Offer"];
+    document.getElementById("rejectedJobs").textContent = count["Rejected"];
+
+    console.log(count["Interview"])  
+
 }
 function filterByStatus(jobs){
     console.log("into filterByStatus");
@@ -97,7 +142,7 @@ function searchInput(jobs){
     console.log("searchValue==>", searchValue);
     
     const filteredSearchJobs = jobs.filter(job =>{
-        if(searchInput ===""){
+        if(searchInput ==""){
             return jobs;
         }     
 
@@ -124,35 +169,47 @@ function createJobCard(job){
     })
 
     const delete_button = document.createElement('button')
-    delete_button.className = "deletebtncss"
+ 
+    delete_button.classList.add("deleteBtnCss")
     delete_button.textContent = "Delete";
     div.appendChild(delete_button)
     delete_button.addEventListener('click', ()=>{
         deletebtn(job.id)
     });
 
-    const editButton = document.createElement("button");
-     delete_button.className = "editbtncss"
-    editButton.className = ""
-    editButton.textContent = "Edit";
-    div.appendChild(editButton);
+    const edit_Button = document.createElement("button");
+    edit_Button.classList.add("editBtnCss")
+    edit_Button.textContent = "Edit";
+    div.appendChild(edit_Button);
 
-    editButton.addEventListener("click", function () {
+    edit_Button.addEventListener("click", function () {
         console.log("job", job)
         openEditPopup(job);
     });
+
+    const buttonGroup = document.createElement("div")
+    buttonGroup.classList.add("button-group");
+
+    buttonGroup.appendChild(delete_button);
+    buttonGroup.appendChild(edit_Button);
+
+    div.appendChild(buttonGroup);
 
     return div;
 }
 
 function createParagraph(label, value) {
     const p = document.createElement("p");
-    p.textContent = label + ": " + value;
+    const strong = document.createElement("strong");
+    strong.textContent = `${label}: `;
+
+    p.appendChild(strong);
+    p.append(value);
+
     return p;
 }
  
-document.getElementById("inputForm").addEventListener("submit", addJobButton);
-loadJobs();
+
 
 function deletebtn(id){
     if (!confirm("Are you sure you want to delete this job?")) {
